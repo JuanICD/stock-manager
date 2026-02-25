@@ -45,10 +45,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
+        log.info("Peticion para: {}", request.getRequestURI());
         try {
             // 1. Extraer el token de la cabecera Authorization
             String jwt = parseJwt(request);
 
+            log.info("Token JWT: {}", jwt);
             // 2. Validar el token usando JwtUtils
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
 
@@ -68,6 +70,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 // 6. Establecer la autenticación en el contexto de seguridad de Spring
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("Usuario autenticado: {}", username);
             }
         } catch (Exception e) {
             log.error("No se pudo configurar la autenticación del usuario: {}", e.getMessage());

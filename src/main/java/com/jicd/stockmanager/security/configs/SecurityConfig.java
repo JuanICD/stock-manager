@@ -69,12 +69,13 @@ public class SecurityConfig {
                 // Definir reglas de autorización
                 .authorizeHttpRequests(auth -> auth
                         // Permitir acceso público a los endpoints de autenticación
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         // Ejemplo de protección por rol: solo ADMIN puede acceder a ciertos endpoints (si existieran)
                         // .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // Cualquier otra petición requiere autenticación
                         .anyRequest().authenticated()
-                );
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         // Añadir el filtro de JWT antes del filtro de autenticación por nombre de usuario y contraseña
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

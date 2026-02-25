@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 public class JwtUtils {
 
-    // Importa la configuración de JWT desde app.yaml mediante JwtProperties
+    // Importa la configuración de JWT desde application.yaml mediante JwtProperties
     private final JwtProperties properties;
 
     /**

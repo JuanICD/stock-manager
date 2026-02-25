@@ -3,11 +3,13 @@ package com.jicd.stockmanager.model;
 import com.jicd.stockmanager.Enums.ROL_TYPE;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -47,8 +49,10 @@ public class User implements UserDetails {
      * @return una colección de autoridades (roles)
      */
     @Override
+    @NullMarked
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Retornamos el rol con el prefijo ROLE_ por convención de Spring Security
+        if (rol == null) return Collections.emptyList();
         return List.of(new SimpleGrantedAuthority("ROLE_" + rol.name()));
     }
 
